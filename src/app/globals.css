@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------
+   Design tokens — NVP
+   Paleta institucional oscura. Los componentes usan sólo estos tokens.
+------------------------------------------------------------------- */
+@theme {
+  --color-ink: #080d16; /* fondo principal */
+  --color-ink-2: #0d1522; /* fondo secundario */
+  --color-surface: #111d2c; /* superficies */
+  --color-surface-2: #15243a;
+  --color-line: #1e3045; /* bordes */
+  --color-line-soft: #16253a;
+  --color-brand: #247bce; /* azul principal */
+  --color-sky: #38bdf8; /* celeste acento */
+  --color-azure: #60a5fa; /* interactivos */
+  --color-fg: #f1f5f9; /* texto principal */
+  --color-muted: #94a3b8; /* texto secundario */
+  --color-subtle: #64748b;
+  --color-up: #34d399;
+  --color-down: #f87171;
+  --color-paper: #f4f6f8;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Paleta de la aplicación del bot (interfaz clara original, app/ui/layout.py).
+   Sólo la usa el mockup del bot; no forma parte de la paleta de la landing. */
+@theme {
+  --color-app-page: #f4f5f8;
+  --color-app-surface: #ffffff;
+  --color-app-line: #e3e6ec;
+  --color-app-ink: #14161a;
+  --color-app-ink-2: #4b5160;
+  --color-app-muted: #7b8190;
+  --color-app-primary: #2a78d6;
+  --color-app-nav: #e8f0fc;
+  --color-app-nav-ink: #1f5fb4;
+  --color-app-head: #fafbfc;
+  --color-app-zebra: #fafbfd;
+  --color-app-positive: #0b7a3b;
+  --color-app-negative: #d03b3b;
+  --color-app-good-bg: #e6f4ec;
+  --color-app-warn-bg: #fdf3e1;
+  --color-app-warn: #8a5a0b;
+  --color-app-idle-bg: #eef0f4;
+  --color-app-idle: #5a6070;
+  --color-app-chrome: #e9ecf1;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-newsreader), Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-brand) 55%, transparent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-azure);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Cifras tabulares en todo lo que sea dato */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Etiqueta tipo "eyebrow" en mono */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Retícula sutil para fondos */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+.text-pretty {
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Trazado de la media móvil del hero */
+.hv-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: hv-draw 2.2s 0.5s var(--ease-out-quint) forwards;
+}
+@keyframes hv-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Reveal on scroll (ver components/ui/reveal.tsx) */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--ry, 16px), 0);
+  transition:
+    opacity 0.7s var(--ease-out-quint) var(--rd, 0s),
+    transform 0.8s var(--ease-out-quint) var(--rd, 0s);
+}
+.js [data-reveal][data-shown] {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }
