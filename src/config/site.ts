@@ -41,11 +41,6 @@ export const site = {
         process.env.NEXT_PUBLIC_BOT_REPO_URL,
         "https://github.com/nicomvazquez/trading-bot-claude",
       ),
-      // Descarga directa del código (zip de la rama principal).
-      downloadUrl: env(
-        process.env.NEXT_PUBLIC_BOT_DOWNLOAD_URL,
-        "https://github.com/nicomvazquez/trading-bot-claude/archive/refs/heads/master.zip",
-      ),
       screenshot: env(process.env.NEXT_PUBLIC_BOT_SCREENSHOT, ""),
     },
     marketMonitor: {

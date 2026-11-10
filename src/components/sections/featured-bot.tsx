@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Download } from "lucide-react";
 import { site } from "@/config/site";
 import { Container, LinkButton, SectionIndex } from "@/components/ui/primitives";
 import { GithubIcon } from "@/components/ui/brand-icons";
@@ -36,7 +35,7 @@ const features = [
 const stack = ["Python", "FastAPI", "NiceGUI", "PostgreSQL · TimescaleDB", "Docker", "Bybit API"];
 
 export function FeaturedBot() {
-  const { repoUrl, downloadUrl, screenshot } = site.projects.tradingBot;
+  const { repoUrl, screenshot } = site.projects.tradingBot;
 
   return (
     <section id="proyectos" className="relative border-t border-line bg-ink-2 py-24 sm:py-32">
@@ -68,9 +67,6 @@ export function FeaturedBot() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <LinkButton href={repoUrl} external icon={<GithubIcon className="size-4" />}>
                 Explorar en GitHub
-              </LinkButton>
-              <LinkButton href={downloadUrl} variant="secondary" icon={<Download aria-hidden className="size-4 text-muted" />}>
-                Descargar proyecto
               </LinkButton>
             </div>
           </Reveal>
